@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    position: sticky;
+    padding: 1%;
+    font-size: 24px;
+    background-color: #ff7d7d;
+    color: #fdfdfd;
+}
+
+.entity, .property {
+    position: sticky;
+    text-align: center;
+    padding: 5%;
+    margin: 1%;
+    z-index: 1;
+    color: #fff;
+}
+
+.entity{
+    background-color: #2196F3;
+}
+
+.property {
+    background-color: #4d687e;
+}
+
+.entity:hover, .property:hover {
+    background-color: rgb(151, 252, 151);
+    color: black;
+    cursor: pointer;
+}
+
+.entities, .properties, .tables, .scripts {
+    float: left;
+    border: 1px solid black;
+    position: sticky;
+}
+
+.selected {
+    background-color: rgb(70, 247, 70);
+    color: black;
+}
+
+.entities-container, .properties-container {
+    height: 93%;
+    overflow-y: scroll;
+}
