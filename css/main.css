@@ -2,33 +2,41 @@ body {
     margin: 0;
 }
 
-.header {
-    text-align: center;
-    position: sticky;
-    padding: 1%;
-    font-size: 24px;
-    background-color: #ff7d7d;
-    color: #fdfdfd;
+.entity, .property{
+    border: solid 2px black;
+    margin: 1%;
 }
 
-.entity, .property {
+.entity-header, .property-header{
     position: sticky;
     text-align: center;
-    padding: 5%;
-    margin: 1%;
     z-index: 1;
     color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.entity{
+.entity-header{
     background-color: #2196F3;
 }
 
-.property {
+.property-header{
     background-color: #4d687e;
 }
 
-.entity:hover, .property:hover {
+.entity .dropbtn, .property .dropbtn{
+    float: right;
+    cursor: copy;
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.entity-header:hover, .property-header:hover{
     background-color: rgb(151, 252, 151);
     color: black;
     cursor: pointer;
@@ -45,7 +53,28 @@ body {
     color: black;
 }
 
+.entities-header, .properties-header{
+    text-align: center;
+    position: sticky;
+    padding: 1%;
+    font-size: 24px;
+    background-color: #ff7d7d;
+    color: #fdfdfd;
+    height: 3%;
+}
+
 .entities-container, .properties-container {
-    height: 93%;
+    height: 96%;
     overflow-y: scroll;
+}
+
+.description-container {
+    display: none;
+    background-color: white;
+    padding: 1%;
+    border-top: solid 1px black;
+}
+
+.div-text{
+    display: inline;
 }

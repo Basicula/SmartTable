@@ -1,5 +1,5 @@
 .navbar {
-    height: 4%;
+    height: 3%;
 }
 
 .main {
@@ -9,8 +9,8 @@
     height: 95%;
 
     display: grid;
-    grid-template-columns: 10% 10% 79%;
-    grid-template-rows: 49% 50%;
+    grid-template-columns: 15% 15% 69%;
+    grid-template-rows: 89% 10%;
     grid-column-gap: 0.5%;
     grid-row-gap: 0.5%;
 }
