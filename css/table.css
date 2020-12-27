@@ -1,0 +1,23 @@
+.table-container{
+    height: 100%;
+    overflow: scroll;
+}
+
+.result-table{
+    border-collapse: collapse;
+}
+
+.result-table td, .result-table th {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.result-table th{
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.result-table td{
+    text-align: center;
+}
