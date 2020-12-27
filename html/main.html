@@ -8,9 +8,11 @@
     <script type="text/javascript" src="../script/menu.js"></script>
     <script type="text/javascript" src="../script/entity.js"></script>
     <script type="text/javascript" src="../script/property.js"></script>
+    <script type="text/javascript" src="../script/table.js"></script>
     <script type="text/javascript" src="../script/draggable.js"></script>
     
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/draggable.css">
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="../css/layout.css">
@@ -19,33 +21,38 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="#">Home</a>
         <div class="dropdown">
-            <button class="dropbtn">Dropdown
+            <button class="dropbtn">File
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-              <a href="#1">Link 1</a>
-              <a href="#2">Link 2</a>
-              <a href="#3">Link 3</a>
+              <a href="#1">Open</a>
+              <a href="#2">Save as...</a>
+            </div>
+        </div> 
+        <div class="dropdown">
+            <button class="dropbtn">Edit
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#1">New entity</a>
+              <a href="#2">New property</a>
             </div>
         </div> 
     </div>
     <div class="main">
         <div class="entities">
-            <div class="header">Entities</div>
+            <div class="entities-header">Entities</div>
             <div class="entities-container"></div>
         </div>
 
         <div class="properties">
-            <div class="header">Properties</div>
+            <div class="properties-header">Properties</div>
             <div class="properties-container"></div>
         </div>
 
         <div class="tables">
-            <div class="table-container">
-                <div class="table"></div>
-            </div>
+            <div class="table-container"></div>
         </div>
 
         <div class="scripts">
