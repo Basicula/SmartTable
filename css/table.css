@@ -32,12 +32,21 @@
     text-align: center;
 }
 
-.column-header-key-words-label {
-
-} 
-
-.column-header-key-words {
+.column-header-select-container {
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.column-header-select {
+    width: 100%;
+}
+
+.column-header-select-label {
+    width: 100%;
+}
+
+.column-header-select-option {
 }
 
 .column-header-with-condition {

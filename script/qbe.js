@@ -35,11 +35,11 @@ function demo_students() {
     }
 
     var entity = new Entity("kek");
-    entity.properties.push(new Pair(name, 123));
-    entity.properties.push(new Pair(surname, 123));
+    entity.properties.push(new Pair(name, "123"));
+    entity.properties.push(new Pair(surname, "123"));
     entity.properties.push(new Pair(age, 123));
     entity.properties.push(new Pair(course, 123));
-    entity.properties.push(new Pair(status, 123));
+    entity.properties.push(new Pair(status, "123"));
     entities.push(entity);
 
     var table = new QBETable("Formats", entities, properties);

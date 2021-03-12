@@ -6,6 +6,14 @@ class Type{
     check(value){
         return true;
     }
+
+    is_exact_the_same(left, right) {
+        return left === right;
+    }
+
+    is_almost_the_same(left, right) {
+        return this.is_exact_the_same(left, right);
+    }
 }
 
 class StringType extends Type {
@@ -15,6 +23,13 @@ class StringType extends Type {
 
     check(value) {
         return true;
+    }
+
+    is_almost_the_same(left, right) {
+        if (is_prefix(left, right))
+            return 1.0;
+        const similarity = string_similarity(left, right);
+        return similarity >= 0.5;
     }
 }
 
@@ -39,6 +54,12 @@ class NumberType extends Type{
         if (typeof value !== "number")
             return false;
         return true;
+    }
+
+    is_almost_the_same(left, right) {
+        left = left.toString();
+        right = right.toString();
+        return is_prefix(left, right);
     }
 }
 

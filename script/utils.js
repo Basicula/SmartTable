@@ -18,6 +18,16 @@ function random_choice(values) {
     return values[rand(values.length)];
 }
 
+function is_prefix(to_check, string) {
+    if (to_check.length > string.length)
+        return false;
+    for (let i = 0; i < to_check.length; ++i) {
+        if(to_check[i] !== string[i])
+            return false;
+    }
+    return true;
+}
+
 function string_similarity(s1, s2) {
     var longer = s1;
     var shorter = s2;
@@ -54,4 +64,11 @@ function edit_distance(s1, s2) {
             costs[s2.length] = lastValue;
     }
     return costs[s2.length];
+}
+
+function swap_nodes(node1, node2) {
+    const afterNode2 = node2.nextElementSibling;
+    const parent = node2.parentNode;
+    node1.replaceWith(node2);
+    parent.insertBefore(node1, afterNode2);
 }
