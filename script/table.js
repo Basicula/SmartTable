@@ -38,14 +38,28 @@ class Table{
                 if (j !== -1)
                     $(cell_element).css("display", self.properties[j].isactive ? "table-cell":"none");
                 tr_element.appendChild(cell_element);
-                if (i === -1 && j === -1)
+                if (i === -1 && j === -1) {
                     cell_element.textContent = this.name;
-                else if (j === -1)
+                    cell_element.classList.add("table-header");
+                }
+                else if (j === -1) {
                     cell_element.textContent = self.entities[i].name;
-                else if (i === -1)
+                    cell_element.classList.add("row-header");
+                }
+                else if (i === -1) {
                     cell_element.textContent = self.properties[j].name;
-                else
-                    cell_element.textContent = "("+i+", "+j+")";
+                    cell_element.classList.add("column-header");
+                }
+                else {
+                    var val = self.entities[i].value(self.properties[j]);
+                    if (val !== undefined) {
+                        cell_element.textContent = val;
+                        if (!self.properties[j].type.check(val))
+                            cell_element.classList.add("error-content");
+                    }
+                    else
+                        cell_element.classList.add("no-data");
+                }
             }
             self.element.appendChild(tr_element);
         }

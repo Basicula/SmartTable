@@ -9,15 +9,77 @@
 
 .result-table td, .result-table th {
     border: 1px solid black;
-    padding: 8px;
 }
 
-.result-table th{
+.column-header{
     text-align: center;
     background-color: #4CAF50;
     color: white;
 }
 
+.column-header-text {
+    margin: 0;
+}
+
+.column-header-condition {
+    padding: 0;
+    margin: 0;
+    border: 1px solid black;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    text-align: center;
+}
+
+.column-header-key-words-label {
+
+} 
+
+.column-header-key-words {
+    width: 100%;
+}
+
+.column-header-with-condition {
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    position: relative;
+}
+
+.row-header{
+    text-align: center;
+    background-color: #7bc93c;
+    color: white;
+}
+
+.table-header{
+    background-color: rgb(71, 71, 71);
+    color: white;
+}
+
 .result-table td{
     text-align: center;
+}
+
+.error-content{
+    background-color: red;
+}
+
+.error-content:hover .error-content-text{
+    visibility: hidden;
+}
+
+.error-content:hover .error-content-text{
+    visibility: visible;
+}
+
+.no-data{
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        #000 5px,
+        #000 10px
+    );
 }

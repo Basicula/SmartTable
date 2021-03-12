@@ -1,0 +1,66 @@
+<head>
+    <title>SmartTable</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="../script/utils.js"></script>
+    <script type="text/javascript" src="../script/main.js"></script>
+    <script type="text/javascript" src="../script/menu.js"></script>
+    <script type="text/javascript" src="../script/entity.js"></script>
+    <script type="text/javascript" src="../script/property.js"></script>
+    <script type="text/javascript" src="../script/type.js"></script>
+    <script type="text/javascript" src="../script/pair.js"></script>
+    <script type="text/javascript" src="../script/table.js"></script>
+    <script type="text/javascript" src="../script/draggable.js"></script>
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/table.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/scrollbar.css">
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="dropdown">
+            <button class="dropbtn">File
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#1">Open</a>
+              <a href="#2">Save as...</a>
+            </div>
+        </div> 
+        <div class="dropdown">
+            <button class="dropbtn">Edit
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#1">New entity</a>
+              <a href="#2">New property</a>
+            </div>
+        </div> 
+    </div>
+    <div class="main">
+        <div class="entities">
+            <div class="entities-header">Entities</div>
+            <div class="entities-container"></div>
+        </div>
+
+        <div class="properties">
+            <div class="properties-header">Properties</div>
+            <div class="properties-container"></div>
+        </div>
+
+        <div class="tables">
+            <div class="table-container"></div>
+        </div>
+
+        <div class="scripts">
+            <div class="script-container">
+                <div class="script"></div>
+            </div>
+        </div>
+    </div>
+</body>

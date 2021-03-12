@@ -1,7 +1,7 @@
 class Entity{
-    constructor(name, properties){
+    constructor(name){
         this.name = name;
-        this.properties = properties;
+        this.properties = [];
         this.description = "";
         this.notes = [];
         this.isactive = false;
@@ -31,8 +31,6 @@ class Entity{
         $(entity_header_text).click(function(e) {
             if (e.target !== this)
                 return;
-            $(this).parent().toggleClass("selected");
-            self.isactive = !self.isactive;
         });
         $(entity_header_text).dblclick(function(e) {
             if (e.target !== this)
@@ -58,10 +56,10 @@ class Entity{
         var description_content = document.createElement("div");
         description_content.style.display = "none";
         description_content.classList.add("description-container");
-        description_content.textContent = "this.description";
         self.element.appendChild(description_content);
-
+        
         $(dropdown_btn).click(function() {
+            description_content.textContent = self.description;
             var display = $(description_content).css("display");
             if (display == "none")
                 $(description_content).css("display", "block");
@@ -70,15 +68,18 @@ class Entity{
         });
     }
 
-    setDescription(description) {
-        this.description = description;
-    }
-
-    getCSS(){
-
-    }
-
     getHTML(){
         return this.element;
+    }
+
+    hasProperty(property){
+        return this.value(property) !== undefined;
+    }
+
+    value(property){
+        for (let i = 0; i < this.properties.length; ++i)
+            if (property === this.properties[i].first)
+                return this.properties[i].second;
+        return undefined;
     }
   }
