@@ -2,11 +2,14 @@ var colors = [];
 var curr_color = 0;
 const refine_cnt = 100;
 
+var background_animation = false;
+const default_background = "radial-gradient(rgba(255, 255, 0, 0.667), rgba(255, 0, 0, 0.667))";
+
 function color_to_hex(color) {
     var hex = "#";
     for (let i = 0; i < 3; ++i)
         hex += ("00" + color[i].toString(16)).substr(-2);
-    hex += "cc"
+    hex += "aa"
     return hex;
 }
 
@@ -26,13 +29,19 @@ function refine_colors() {
 }
 
 function update() {
+    if (!background_animation) {
+        $(".welcome").css({
+            background: default_background
+        });
+        return;
+    }
     var color1 = Math.round(curr_color);
     var color2 = color1 + refine_cnt;
     color2 %= colors.length;
     color1 %= colors.length;
-    var gradient = `radial-gradient(${color_to_hex(colors[color1])}, ${color_to_hex(colors[color2])})`;
+    var gradient = `radial-gradient(${color_to_hex(colors[color2])}, ${color_to_hex(colors[color1])})`;
     //console.log(gradient);
-    $(".welcome-text").css({
+    $(".welcome").css({
         background: gradient
     });
     ++curr_color;
@@ -40,8 +49,17 @@ function update() {
 
 $(document).ready(function(){
     colors.push([0x00, 0xff, 0x00]);
+    colors.push([0x00, 0xff, 0xff]);
     colors.push([0x00, 0x00, 0xff]);
+    colors.push([0xff, 0x00, 0xff]);
     colors.push([0xff, 0x00, 0x00]);
+    colors.push([0xff, 0xff, 0x00]);
     refine_colors();
     setInterval(function() {update();}, 100);
+});
+
+$(document).keydown(function(e){
+    if (e.keyCode === 65 && e.ctrlKey && e.altKey) {
+        background_animation = !background_animation;
+    }
 });

@@ -56,7 +56,11 @@ function demo_students() {
 }
 
 $(document).ready(function(){
-    demo_students();
+    // get current request and determine what demo run
+    var url = new URL(window.location.href);
+    var demo = url.searchParams.get("demo");
+    if (demo == 0)
+        demo_students();
 });
 
 $(document).keydown(function(e){

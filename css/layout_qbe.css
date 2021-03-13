@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .navbar {
     height: 3%;
 }
@@ -5,14 +9,15 @@
 .main {
     z-index: 0;
     top: 0;
-    margin: 1px;
-    height: 95%;
+    height: 97%;
 
     display: grid;
     grid-template-columns: 15% 84%;
     grid-template-rows: 89% 10%;
     grid-column-gap: 0.5%;
     grid-row-gap: 0.5%;
+
+    background-color: #555;
 }
 
 .properties {
@@ -20,6 +25,8 @@
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
+
+    background-color: white;
 }
   
 .tables {
@@ -27,6 +34,8 @@
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
+
+    background-color: white;
 }
   
 .scripts {
@@ -34,4 +43,6 @@
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
+
+    background-color: white;
 }
