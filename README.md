@@ -14,11 +14,12 @@ With this app you can simply and freely work with relation databases.
 - [x] One table view
 - [x] Search (exact and like)
 - [x] Sorting (ascending and descending)
+- [x] Adding new column
+- [x] Adding new row
+- [x] Adding new table
+- [x] Editing table data
+- [x] Save/Load file with tables (CSV file format)
+- [ ] Save/Load file with tables (some other formats?)
 - [ ] Sorting priority for columns
-- [ ] Adding new column
-- [ ] Adding new row
-- [ ] Adding new table
-- [ ] Editing table data
 - [ ] Table operations
-- [ ] Save/Load file with tables
 - [ ] Regexp support for searching
