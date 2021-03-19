@@ -2,16 +2,18 @@ class Property{
   constructor(name, type){
     this.name = name;
     this.type = type;
+    if (!this.type)
+        this.type = new StringType();
     this.description = "";
     this.notes = [];
-    this.isactive = false;
+    this.is_active = false;
     this._setElement();
   }
 
   _setElement(){
       var self = this; // to distinguish JQuery and inner class "this" object
-      self.element = document.createElement("div");
-      self.element.classList.add("property");
+      self.view_element = document.createElement("div");
+      self.view_element.classList.add("property");
 
       var property_header = document.createElement("div");
       property_header.classList.add("property-header");
@@ -26,13 +28,13 @@ class Property{
           if (e.target !== this)
               return;
           $(this).toggleClass("selected");
-          self.isactive = !self.isactive;
+          self.is_active = !self.is_active;
       });
       $(property_header_text).click(function(e) {
           if (e.target !== this)
               return;
           $(this).parent().toggleClass("selected");
-          self.isactive = !self.isactive;
+          self.is_active = !self.is_active;
       });
       $(property_header_text).dblclick(function(e) {
           if (e.target !== this)
@@ -53,12 +55,12 @@ class Property{
       arrow.classList.add("fa-caret-down");
       dropdown_btn.appendChild(arrow);
       property_header.appendChild(dropdown_btn);
-      self.element.appendChild(property_header);
+      self.view_element.appendChild(property_header);
       
       var description_content = document.createElement("div");
       description_content.style.display = "none";
       description_content.classList.add("description-container");
-      self.element.appendChild(description_content);
+      self.view_element.appendChild(description_content);
       
       $(dropdown_btn).click(function() {
           description_content.textContent = self.description;
@@ -68,10 +70,6 @@ class Property{
           else
               $(description_content).css("display", "none");
       });
-  }
-
-  getHTML(){
-      return this.element;
   }
 }
 

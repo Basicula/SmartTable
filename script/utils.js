@@ -72,3 +72,28 @@ function swap_nodes(node1, node2) {
     node1.replaceWith(node2);
     parent.insertBefore(node1, afterNode2);
 }
+
+function save_to_file(content, filename, contentType) {
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: contentType});
+    
+    a.href= URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+    
+    URL.revokeObjectURL(a.href);
+  };
+
+function read_file(e) {
+    var file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var contents = e.target.result;
+      displayContents(contents);
+    };
+    reader.readAsText(file);
+  }
+  

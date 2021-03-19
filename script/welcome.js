@@ -40,7 +40,6 @@ function update() {
     color2 %= colors.length;
     color1 %= colors.length;
     var gradient = `radial-gradient(${color_to_hex(colors[color2])}, ${color_to_hex(colors[color1])})`;
-    //console.log(gradient);
     $(".welcome").css({
         background: gradient
     });

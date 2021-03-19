@@ -1,14 +1,54 @@
-.table-container{
+.table-tabs {
+    height: 3%;
+    width: 100%;
+    border: 1px black solid;
+    display: flex;
+    background-color: #f1f1f1;
+}
+
+.table-tab {
+    text-align: center;
     height: 100%;
-    overflow: scroll;
+    border-right: 1px black solid;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 1% 0 1%;
+}
+
+.table-add-tab {
+    text-align: center;
+    height: 100%;
+    border-radius: 0% 50% 0%   0%;
+    border-right: 1px black solid;
+    padding: 0 1% 0 1%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #222;
+    background-color: #aaa;
+}
+
+.table-tab:hover, .table-add-tab:hover{
+    background-color: #ddd;
+}
+
+.table-tab-selected {
+    background-color: #ccc;
+}
+
+.table-container{
+    height: 97%;
+    overflow: auto;
 }
 
 .result-table{
     border-collapse: collapse;
 }
 
-.result-table td, .result-table th {
+.result-table th {
     border: 1px solid black;
+    width: auto;
 }
 
 .column-header{
@@ -19,6 +59,7 @@
 
 .column-header-text {
     margin: 0;
+    white-space: nowrap;
 }
 
 .column-header-condition {
@@ -39,11 +80,13 @@
 }
 
 .column-header-select {
-    width: 100%;
+    width: auto;
+    text-align-last: center;
 }
 
 .column-header-select-label {
     width: 100%;
+    white-space: nowrap;
 }
 
 .column-header-select-option {
@@ -53,7 +96,6 @@
     text-align: center;
     background-color: #4CAF50;
     color: white;
-    position: relative;
 }
 
 .row-header{
@@ -65,10 +107,6 @@
 .table-header{
     background-color: rgb(71, 71, 71);
     color: white;
-}
-
-.result-table td{
-    text-align: center;
 }
 
 .error-content{
@@ -84,11 +122,16 @@
 }
 
 .no-data{
-    background-image: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 5px,
-        #000 5px,
-        #000 10px
-    );
+    min-height: 100%;
+    background-color: rgba(0,0,0,0.05);
+}
+
+.no-data::after {
+  content: "\00a0";
+}
+
+.cell_data {
+    border: 1px solid black;
+    width: auto;
+    text-align: center;
 }

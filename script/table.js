@@ -28,7 +28,7 @@ class Table{
         for (let i = -1; i < self.entities.length; ++i) {
             var tr_element = document.createElement("tr");
             if (i !== -1)
-                $(tr_element).css("display", self.entities[i].isactive ? "table-row":"none");
+                $(tr_element).css("display", self.entities[i].is_active ? "table-row":"none");
             for (let j = -1; j < self.properties.length; ++j) {
                 var cell_element;
                 if (i === -1 || j === -1)
@@ -36,7 +36,7 @@ class Table{
                 else
                     cell_element = document.createElement("td");
                 if (j !== -1)
-                    $(cell_element).css("display", self.properties[j].isactive ? "table-cell":"none");
+                    $(cell_element).css("display", self.properties[j].is_active ? "table-cell":"none");
                 tr_element.appendChild(cell_element);
                 if (i === -1 && j === -1) {
                     cell_element.textContent = this.name;
@@ -68,14 +68,14 @@ class Table{
     update() {
         var self = this;
         for (let i = 0; i < self.element.children.length; ++i) {
-            if (i > 0 && !self.entities[i-1].isactive) {
+            if (i > 0 && !self.entities[i-1].is_active) {
                 $(self.element.children[i]).css("display", "none");
                 continue;
             }
             $(self.element.children[i]).css("display", "table-row");
             var table_row = self.element.children[i];
             for (let j = 0; j < table_row.children.length; ++j) {
-                if (j > 0 && !self.properties[j-1].isactive) {
+                if (j > 0 && !self.properties[j-1].is_active) {
                     $(table_row.children[j]).css("display", "none");
                     continue;
                 }

@@ -1,10 +1,12 @@
 class Entity{
-    constructor(name){
+    constructor(name, values_cnt){
         this.name = name;
-        this.properties = [];
+        this.values = [];
+        for (let i = 0; i < values_cnt; ++i)
+            this.values.push(undefined);
         this.description = "";
         this.notes = [];
-        this.isactive = false;
+        this.is_active = false;
         this._setElement();      
     }
 
@@ -26,7 +28,7 @@ class Entity{
             if (e.target !== this)
                 return;
             $(this).toggleClass("selected");
-            self.isactive = !self.isactive;
+            self.is_active = !self.is_active;
         });
         $(entity_header_text).click(function(e) {
             if (e.target !== this)
@@ -68,18 +70,16 @@ class Entity{
         });
     }
 
-    getHTML(){
-        return this.element;
+    value(j){
+        if (j < 0 || j >= this.values.length)
+            return undefined;
+        return this.values[j];
     }
 
-    hasProperty(property){
-        return this.value(property) !== undefined;
+    set_value(j, value) {
+        if (j < 0 || j >= this.values.length)
+            return;
+        this.values[j] = value;
     }
 
-    value(property){
-        for (let i = 0; i < this.properties.length; ++i)
-            if (property === this.properties[i].first)
-                return this.properties[i].second;
-        return undefined;
-    }
   }

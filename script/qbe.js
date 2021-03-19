@@ -1,7 +1,8 @@
-var entities = [];
-var properties = [];
+var tables_editor;
 
 function demo_students() {
+    var entities = [];
+    var properties = [];
     // properties
     var name = new Property("Name", new StringType());
     name.description = "Student's name";
@@ -24,43 +25,48 @@ function demo_students() {
     status.description = "Student's status";
     properties.push(status);
 
-    for (let i = 0; i < 100; ++i) {
+    for (let i = 0; i < 10; ++i) {
         var entity = new Entity();
-        entity.properties.push(new Pair(name, random_string()));
-        entity.properties.push(new Pair(surname, random_string()));
-        entity.properties.push(new Pair(age, random(18, 25)));
-        entity.properties.push(new Pair(course, random(1, 6)));
-        entity.properties.push(new Pair(status, random_choice(status_values)));
+        entity.values.push(random_string());
+        entity.values.push(random_string());
+        entity.values.push(random(18, 25));
+        entity.values.push(random(1, 6));
+        entity.values.push(random_choice(status_values));
         entities.push(entity);
     }
 
     var entity = new Entity("kek");
-    entity.properties.push(new Pair(name, "123"));
-    entity.properties.push(new Pair(surname, "123"));
-    entity.properties.push(new Pair(age, 123));
-    entity.properties.push(new Pair(course, 123));
-    entity.properties.push(new Pair(status, "123"));
+    entity.values.push("123");
+    entity.values.push("123");
+    entity.values.push(123);
+    entity.values.push(123);
+    entity.values.push("123");
     entities.push(entity);
 
-    var table = new QBETable("Formats", entities, properties);
-    $(".table-container").append(table.getHTML());
-    $(".entities-container").each(function(){
-        for (let i = 0; i < entities.length; ++i)
-            $(this).append(entities[i].getHTML());
-    });
-    $(".properties-container").each(function(){
-        for (let i = 0; i < properties.length; ++i)
-            $(this).append(properties[i].getHTML());
-    });
-    setInterval(function() {table.update()}, 500);
+    var no_data_entity = new Entity("no data", properties.length);
+    entities.push(no_data_entity);
+
+    var table = new QBETable("Students", entities, properties);
+    
+    return table;
+}
+
+function init_data(demo) {
+    tables_editor = new TablesEditor();
+    if (demo == 0)
+        tables_editor.add_table(demo_students()); 
+}
+
+function update() {
+    tables_editor.update();
 }
 
 $(document).ready(function(){
     // get current request and determine what demo run
     var url = new URL(window.location.href);
     var demo = url.searchParams.get("demo");
-    if (demo == 0)
-        demo_students();
+    init_data(demo);
+    setInterval(function() {update()}, 500);
 });
 
 $(document).keydown(function(e){

@@ -25,7 +25,15 @@ class StringType extends Type {
         return true;
     }
 
+    is_exact_the_same(left, right) {
+        left = left.toString();
+        right = right.toString();
+        return left === right;
+    }
+
     is_almost_the_same(left, right) {
+        left = left.toString();
+        right = right.toString();
         if (is_prefix(left, right))
             return 1.0;
         const similarity = string_similarity(left, right);
@@ -54,6 +62,12 @@ class NumberType extends Type{
         if (typeof value !== "number")
             return false;
         return true;
+    }
+
+    is_exact_the_same(left, right) {
+        left = Number(left);
+        right = Number(right);
+        return left === right;
     }
 
     is_almost_the_same(left, right) {
