@@ -95,5 +95,9 @@ function read_file(e) {
       displayContents(contents);
     };
     reader.readAsText(file);
-  }
+}
   
+function open_link_in_new_tab(url) {
+    var win = window.open(url, '_blank');
+    win.focus(); 
+}

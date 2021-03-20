@@ -25,7 +25,7 @@ function demo_students() {
     status.description = "Student's status";
     properties.push(status);
 
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 0; i < 35; ++i) {
         var entity = new Entity();
         entity.values.push(random_string());
         entity.values.push(random_string());

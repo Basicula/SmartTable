@@ -51,7 +51,6 @@ class Property{
       var description_content = document.createElement("div");
       description_content.style.display = "none";
       description_content.classList.add("description-container");
-      console.log(self.description);
 
       var dropdown_btn = create_dropdown_button(
             function() {

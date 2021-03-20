@@ -1,3 +1,5 @@
+const SEARCHING_GUIDE_URL = "https://github.com/Basicula/SmartTable/blob/master/Instructions/Searching.md";
+
 class TablesEditor {
     constructor() {
         this.tables = [];
@@ -27,6 +29,8 @@ class TablesEditor {
         this.menu.add_section(edit);
 
         var help = new MenuSection("Help");
+        var searching = new MenuItem("Searching", function() {open_link_in_new_tab(SEARCHING_GUIDE_URL);});
+        help.add_item(searching);
         this.menu.add_section(help);
     }
 

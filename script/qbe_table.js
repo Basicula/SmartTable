@@ -1,5 +1,6 @@
-const KEY_WORD_EXACTLY = "EXACTLY";
-const KEY_WORD_LIKE = "LIKE";
+const SEARCHING_MODE_EXACTLY = "EXACTLY";
+const SEARCHING_MODE_LIKE = "LIKE";
+const SEARCHING_MODE_REGEXP = "REGEXP";
 
 const SORT_NONE = "NONE";
 const SORT_ASCENDING = "ASCENDING";
@@ -11,7 +12,7 @@ class QBETable{
         this.entities = entities; // rows
         this.properties = properties; // columns
 
-        this.key_words = [KEY_WORD_EXACTLY, KEY_WORD_LIKE];
+        this.searching_modes = [SEARCHING_MODE_EXACTLY, SEARCHING_MODE_LIKE, SEARCHING_MODE_REGEXP];
         this.sort_modes = [SORT_NONE, SORT_ASCENDING, SORT_DESCENDING];
 
         if (!entities)
@@ -71,7 +72,7 @@ class QBETable{
         return container;
     }
 
-    _init_column_header(column_id) {
+    _init_column_header_with_conditions(column_id) {
         // create column header
         var column_header_with_conditions = document.createElement("th");
         column_header_with_conditions.classList.add("column-header-with-condition");
@@ -87,7 +88,7 @@ class QBETable{
         column_header_conditions_container.appendChild(column_condition);
         
         // create key words container for different searching modes etc
-        var key_words_container = this._init_column_header_container("Key words:", this.key_words)
+        var key_words_container = this._init_column_header_container("Searching:", this.searching_modes)
         column_header_conditions_container.appendChild(key_words_container);
 
         // create sort modes container
@@ -121,7 +122,7 @@ class QBETable{
     _init_cell_content(i, j) {
         // i = -1 coords of column header
         if (i === -1)
-            return this._init_column_header(j);
+            return this._init_column_header_with_conditions(j);
 
         // create cell element
         var cell_element = document.createElement("td");
@@ -290,10 +291,14 @@ class QBETable{
             const value = entity.value(j);
             if (value === undefined)
                 ok = false;
-            else if (key_word === KEY_WORD_EXACTLY)
+            else if (key_word === SEARCHING_MODE_EXACTLY)
                 ok &= property_type.is_exact_the_same(condition, value);
-            else if (key_word === KEY_WORD_LIKE)
+            else if (key_word === SEARCHING_MODE_LIKE)
                 ok &= property_type.is_almost_the_same(condition, value);
+            else if (key_word === SEARCHING_MODE_REGEXP) {
+                var re = new RegExp(condition);
+                ok &= re.test(value);
+            }
         }
         return ok;
     }
