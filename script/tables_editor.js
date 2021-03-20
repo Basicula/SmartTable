@@ -30,14 +30,31 @@ class TablesEditor {
         this.menu.add_section(help);
     }
 
+    _delete_table_button() {
+        var x = document.createElement("div");
+        x.classList.add("x-button");
+        x.textContent = "X";
+        return x;
+    }
+
     _init_table_tab(table_id) {
         var self = this;
         var table_tab = document.createElement("div");
         table_tab.classList.add("table-tab");
         table_tab.textContent = this.tables[table_id].name;
+
+        var x_button = this._delete_table_button();
+        $(x_button).click(function() {
+            self.tables[table_id].is_active = false;
+            self.table_tabs_container.children[table_id].style.display = "none";
+        });
+        table_tab.appendChild(x_button);
+        
         if (this.tables[table_id].is_active)
            table_tab.classList.add("table-tab-selected");
-        $(table_tab).click(function() {
+        $(table_tab).click(function(e) {
+            if (e.target !== this)
+                return;
             for (let tab_id = 0; tab_id < self.tables.length; ++tab_id) {
                 self.tables[tab_id].is_active = false;
                 self.table_tabs_container.children[tab_id].classList.remove("table-tab-selected");

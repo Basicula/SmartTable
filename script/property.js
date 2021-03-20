@@ -48,28 +48,23 @@ class Property{
       });
       property_header.appendChild(property_header_text);
       
-      var dropdown_btn = document.createElement("button");
-      dropdown_btn.classList.add("dropbtn")
-      var arrow = document.createElement("i");
-      arrow.classList.add("fa");
-      arrow.classList.add("fa-caret-down");
-      dropdown_btn.appendChild(arrow);
-      property_header.appendChild(dropdown_btn);
-      self.view_element.appendChild(property_header);
-      
       var description_content = document.createElement("div");
       description_content.style.display = "none";
       description_content.classList.add("description-container");
+      console.log(self.description);
+
+      var dropdown_btn = create_dropdown_button(
+            function() {
+                description_content.textContent = self.description;
+                description_content.style.display = "";
+            }, 
+            function() {
+                description_content.style.display = "none";
+            });
+      property_header.appendChild(dropdown_btn);
+
+      self.view_element.appendChild(property_header);
       self.view_element.appendChild(description_content);
-      
-      $(dropdown_btn).click(function() {
-          description_content.textContent = self.description;
-          var display = $(description_content).css("display");
-          if (display == "none")
-              $(description_content).css("display", "block");
-          else
-              $(description_content).css("display", "none");
-      });
   }
 }
 

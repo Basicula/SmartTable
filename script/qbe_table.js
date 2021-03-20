@@ -73,29 +73,49 @@ class QBETable{
 
     _init_column_header(column_id) {
         // create column header
-        var column_header = document.createElement("th");
-        column_header.classList.add("column-header-with-condition");
-        $(column_header).css("display", this.properties[column_id].is_active ? "table-cell":"none");
-
-        // create and init column header text
-        var column_name = document.createElement("p");
-        column_name.classList.add("column-header-text");
-        column_name.textContent = this.properties[column_id].name;
-        column_header.appendChild(column_name);
+        var column_header_with_conditions = document.createElement("th");
+        column_header_with_conditions.classList.add("column-header-with-condition");
+        $(column_header_with_conditions).css("display", this.properties[column_id].is_active ? "table-cell":"none");
 
         // create edit field for entering user values
+        var column_header_conditions_container = document.createElement("div");
+        column_header_conditions_container.classList.add("column-header-conditions-container");
+        column_header_conditions_container.style.display = "none";
+
         var column_condition = document.createElement("input");
         column_condition.classList.add("column-header-condition");
-        column_header.appendChild(column_condition);
+        column_header_conditions_container.appendChild(column_condition);
         
         // create key words container for different searching modes etc
         var key_words_container = this._init_column_header_container("Key words:", this.key_words)
-        column_header.appendChild(key_words_container);
+        column_header_conditions_container.appendChild(key_words_container);
 
         // create sort modes container
         var sort_modes_container = this._init_column_header_container("Sorting:", this.sort_modes);
-        column_header.appendChild(sort_modes_container);
-        return column_header;
+        column_header_conditions_container.appendChild(sort_modes_container);
+
+        // create and init column header text
+        var column_header = document.createElement("div");
+        column_header.classList.add("column-header");
+
+        var column_name = document.createElement("div");
+        column_name.classList.add("column-header-text");
+        column_name.textContent = this.properties[column_id].name;
+        column_header.appendChild(column_name);
+        
+        var dropdown_btn = create_dropdown_button(
+            function() {
+                column_header_conditions_container.style.display = "";
+            }, 
+            function() {
+                column_header_conditions_container.style.display = "none";
+            });
+        column_header.appendChild(dropdown_btn);
+
+        column_header_with_conditions.appendChild(column_header);
+        column_header_with_conditions.appendChild(column_header_conditions_container);
+
+        return column_header_with_conditions;
     }
 
     _init_cell_content(i, j) {
@@ -202,11 +222,13 @@ class QBETable{
             }
             $(column_header).css("display", "table-cell");
             // update property name in case if user has changed it
-            column_header.firstChild.textContent = this.properties[j].name;
-            const condition_input_field = column_header.children[1];
-            const key_word_select_container = column_header.children[2];
+            var header_text = column_header.children[0];
+            var header_conditions_container = column_header.children[1];
+            header_text.firstChild.textContent = this.properties[j].name;
+            const condition_input_field = header_conditions_container.children[0];
+            const key_word_select_container = header_conditions_container.children[1];
             const key_word_select = key_word_select_container.children[1]; // 0 child is label
-            const sort_mode_select_container = column_header.children[3];
+            const sort_mode_select_container = header_conditions_container.children[2];
             const sort_mode_select = sort_mode_select_container.children[1]; // 0 child is label
             // form condition from user
             conditions.push({   condition: condition_input_field.value, 

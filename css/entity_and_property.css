@@ -20,18 +20,6 @@
     background-color: #00ad90;
 }
 
-.entity .dropbtn, .property .dropbtn{
-    float: right;
-    cursor: copy;
-    font-size: 16px;  
-    border: none;
-    outline: none;
-    color: white;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-}
-
 .entity-header:hover, .property-header:hover{
     background-color: rgb(151, 252, 151);
     color: black;
@@ -66,7 +54,6 @@
 }
 
 .description-container {
-    display: none;
     background-color: rgb(199, 199, 199);
     font-size: 12px;
     padding: 1%;

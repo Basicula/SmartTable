@@ -4,6 +4,7 @@
     border: 1px black solid;
     display: flex;
     background-color: #f1f1f1;
+    overflow: auto;
 }
 
 .table-tab {
@@ -14,6 +15,8 @@
     align-items: center;
     cursor: pointer;
     padding: 0 1% 0 1%;
+    position: relative;
+    white-space: nowrap;
 }
 
 .table-add-tab {
@@ -51,15 +54,24 @@
     width: auto;
 }
 
-.column-header{
+.column-header-with-condition {
     text-align: center;
     background-color: #4CAF50;
     color: white;
 }
 
+.column-header {
+    display: inline-flex;
+    align-items: center;
+}
+
 .column-header-text {
     margin: 0;
     white-space: nowrap;
+}
+
+.column-header-conditions-container {
+    display: block;
 }
 
 .column-header-condition {
@@ -134,4 +146,18 @@
     border: 1px solid black;
     width: auto;
     text-align: center;
+}
+
+.x-button {
+    position: absolute;
+    color: black;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 6pt;
+    font-weight: bold;
+}
+
+.x-button:hover {
+    cursor: default;
 }
