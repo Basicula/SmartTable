@@ -11,15 +11,38 @@ With this app you can simply and freely work with relation databases.
 - [Step by step example](Instructions/Step_by_step.md)
 
 ## Feature list
-- [x] One table view
-- [x] Search (exact and like)
+- [x] View:
+    - [x] Selection results
+- [x] Searching:
+    - [x] Exact search
+    - [x] Like search
+    - [x] Regular expressions
 - [x] Sorting (ascending and descending)
-- [x] Adding new column
-- [x] Adding new row
-- [x] Adding new table
-- [x] Editing table data
-- [x] Save/Load file with tables (CSV file format)
-- [ ] Save/Load file with tables (some other formats?)
-- [ ] Sorting priority for columns
+    - [x] Ascending
+    - [x] Descending
+    - [ ] Sorting priority for columns(now implicit priority from left column to right)
+- [x] Adding:
+    - [x] Table
+    - [x] Column
+    - [x] Row
+- [ ] Editing:
+    - [ ] Cell
+        - [x] Content
+        - [ ] Notes
+    - [ ] Table
+        - [x] Name
+        - [ ] Description
+        - [ ] Notes
+    - [ ] Column
+        - [x] Name
+        - [ ] Data type
+        - [ ] Description
+        - [ ] Notes
+- [ ] Removing:
+    - [x] Table
+    - [ ] Column
+    - [ ] Row
+- [ ] Save/Load:
+    - [x] File with table (CSV file format)
+    - [ ] File with tables (some other formats SQL?)
 - [ ] Table operations
-- [ ] Regexp support for searching
