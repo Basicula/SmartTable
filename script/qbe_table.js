@@ -200,32 +200,20 @@ class QBETable{
             
     }
 
-    update() {
-        this._update_property_views();
-        // there is nothing to do anymore
-        if (!this.is_active){
-            this.view_element.style.display = "none";
-            return;
-        }
-
-        this.view_element.style.display = "table";
+    get_conditions() {
         var conditions = [];
         // first of all get user input from column headers
         var column_headers_row = this.view_element.firstChild;
         for (let j = 0; j < column_headers_row.children.length; ++j) {
             // get column header
-            var column_header = column_headers_row.children[j];
+            const column_header = column_headers_row.children[j];
             // skip and hide those columns that aren't active
             if (!this.properties[j].is_active) {
-                $(column_header).css("display", "none");
                 conditions.push(null);
                 continue;
             }
-            $(column_header).css("display", "table-cell");
             // update property name in case if user has changed it
-            var header_text = column_header.children[0];
-            var header_conditions_container = column_header.children[1];
-            header_text.firstChild.textContent = this.properties[j].name;
+            const  header_conditions_container = column_header.children[1];
             const condition_input_field = header_conditions_container.children[0];
             const key_word_select_container = header_conditions_container.children[1];
             const key_word_select = key_word_select_container.children[1]; // 0 child is label
@@ -236,6 +224,19 @@ class QBETable{
                                 key_word: key_word_select.value,
                                 sort_mode: sort_mode_select.value});
         }
+        return conditions;
+    }
+
+    update() {
+        this._update_property_views();
+        // there is nothing to do anymore
+        if (!this.is_active){
+            this.view_element.style.display = "none";
+            return;
+        }
+
+        this.view_element.style.display = "";
+        var conditions = this.get_conditions();
         
         // check that nothing changed otherwise update all
         if (this.prev_conditions.length === conditions.length) {
@@ -254,24 +255,29 @@ class QBETable{
         this.sort(conditions);
 
         // start from 1 because 0 child is column header row
-        for (let row_id = 1; row_id < this.view_element.children.length; ++row_id) {
+        for (let row_id = 0; row_id < this.view_element.children.length; ++row_id) {
             var table_row = this.view_element.children[row_id];
+            
             // get current entity including sorted order
-            const curr_entity = this.sorted_entities_with_indices[row_id - 1].entity;
-            const curr_entity_index = this.sorted_entities_with_indices[row_id - 1].index;
+            const curr_entity = row_id === 0 ? undefined : this.sorted_entities_with_indices[row_id - 1].entity;
+            const curr_entity_index = row_id === 0 ? -1 : this.sorted_entities_with_indices[row_id - 1].index;
+
             for (let j = 0; j < table_row.children.length; ++j) {
                 if (!this.properties[j].is_active) {                    
-                    $(table_row.children[j]).css("display", "none");
+                    table_row.children[j].style.display = "none";
                     continue;
                 }
-                table_row.children[j].replaceWith(this._init_cell_content(curr_entity_index, j));
+                table_row.children[j].style.display = "";
+                if (row_id > 0)
+                    table_row.children[j].replaceWith(this._init_cell_content(curr_entity_index, j));
             }
+
             // process table data including conditions
             const any_condition_to_check = !conditions.every((value, index, array) => value === null);
             if (row_id === 0 || any_condition_to_check && this.all_conditions_satisfied(conditions, curr_entity))
-                $(table_row).css("display", "table-row");
+                table_row.style.display = "";
             else
-                $(table_row).css("display", "none");
+                table_row.style.display = "none";
         }
     }
 
@@ -339,9 +345,37 @@ class QBETable{
                     return is_ascending ? -1 : 1;
                 else if (a_val > b_val)
                     return is_ascending ? 1 : -1;
-
             }
             return 0;
         });
+    }
+
+    sort_entities(entities, conditions) {
+        entities.sort(function(a, b) {
+            for (let j = 0; j < conditions.length; ++j) {
+                if (conditions[j] === null || conditions[j].sort_mode === SORT_NONE)
+                    continue;
+                const a_val = a.value(j);
+                const b_val = b.value(j);
+                const is_ascending = conditions[j].sort_mode === SORT_ASCENDING;
+                if (a_val < b_val)
+                    return is_ascending ? -1 : 1;
+                else if (a_val > b_val)
+                    return is_ascending ? 1 : -1;
+            }
+            return 0;
+        });
+        return entities;
+    }
+
+    get_result_from_conditions(conditions) {
+        var result = [];
+        for (let entity_id = 0; entity_id < this.entities.length; ++entity_id) {
+            if (this.all_conditions_satisfied(conditions, this.entities[entity_id])) {
+                result.push(this.entities[entity_id]);
+            }
+        }
+        result = this.sort_entities(result, conditions);
+        return result;
     }
 }

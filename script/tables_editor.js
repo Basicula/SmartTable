@@ -14,9 +14,11 @@ class TablesEditor {
 
         var file = new MenuSection("File");
         var open_file = new MenuItem("Load CSV", function() { self.open_csv_file(); });
-        var save_as = new MenuItem("Save selected", function() { self.save_active_table_to_file(); });
+        var save_selected_table = new MenuItem("Save selected table", function() { self.save_active_table_to_file(); });
+        var save_result = new MenuItem("Save result", function() { self.save_request_result_to_file(); });
         file.add_item(open_file);
-        file.add_item(save_as);
+        file.add_item(save_selected_table);
+        file.add_item(save_result);
         this.menu.add_section(file);
 
         var edit = new MenuSection("Edit");
@@ -149,11 +151,38 @@ class TablesEditor {
                         file_content += this.current_table.entities[row].value(column);
                 }
                 
-                if (column === this.current_table.properties.length - 1)
-                    file_content += "\n";
-                else
+                if (column !== this.current_table.properties.length - 1)
                     file_content += ",";
             }
+            file_content += "\n";
+        }
+        save_to_file(file_content, this.current_table.name + ".csv", "text/csv");
+    }
+
+    save_request_result_to_file() {
+        var file_content = "";
+        const conditions = this.current_table.get_conditions();
+        const result = this.current_table.get_result_from_conditions(conditions);
+        for (let row = -1; row < result.length; ++row) {
+            var separator = false;
+            for (let column = 0; column < conditions.length; ++column) {
+                if (!this.current_table.properties[column].is_active)
+                    continue;
+
+                if (separator)
+                    file_content += ",";
+                separator = true;
+
+                // write column headers
+                if (row === -1) 
+                    file_content += this.current_table.properties[column].name;
+                else {
+                    const value = result[row].value(column);
+                    if (value !== undefined)
+                        file_content += value;
+                }
+            }
+            file_content += "\n";
         }
         save_to_file(file_content, this.current_table.name + ".csv", "text/csv");
     }
