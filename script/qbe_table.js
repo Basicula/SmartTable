@@ -39,11 +39,69 @@ class QBETable{
         this.sorted_entities_with_indices.push({index: index, entity: entity});
     }
 
-    add_property(property) {
-        this.properties.push(property);
-        this.properties_container.appendChild(property.view_element);
-        for (let row_id = -1; row_id < this.entities.length; ++row_id)
-            this.view_element.children[row_id + 1].appendChild(this._init_cell_content(row_id, this.properties.length - 1));
+    // adds new property at some position if position isn't set then assuming pushing to the end
+    add_property(property, position) {
+        if (position === undefined || position >= this.properties.length) {
+            position = this.properties.length;
+            this.properties.push(property);
+            this.properties_container.appendChild(property.view_element);
+        }
+        else {
+            this.properties.splice(position, 0, property);
+            this.properties_container.insertBefore(property.view_element, this.properties_container.children[position]);
+        }
+        // update callbacks due to possible shifting
+        for (let property_id = 0; property_id < this.properties.length; ++property_id)
+            this._setup_property_callbacks(property_id);
+
+        // update table view
+        for (let row_id = -1; row_id < this.entities.length; ++row_id) {
+            var row = this.view_element.children[row_id + 1];
+            row.insertBefore(this._init_cell_content(row_id, position), row.children[position]);
+            // update values inside entity
+            if (row_id >= 0)
+                this.entities[row_id].values.splice(position, 0, undefined);
+        }
+    }
+
+    delete_property(property_id) {
+        this.properties_container.removeChild(this.properties[property_id].view_element);
+        this.properties.splice(property_id, 1);
+        // update table view
+        for (let row_id = 0; row_id < this.view_element.children.length; ++row_id) {
+            var row = this.view_element.children[row_id];
+            row.removeChild(row.children[property_id]);
+            // update values inside entity
+            if (row_id > 0)
+                this.entities[row_id - 1].values.splice(property_id, 1);
+        }
+        // update callbacks due to possible shifting
+        for (let property_id = 0; property_id < this.properties.length; ++property_id)
+            this._setup_property_callbacks(property_id);
+    }
+
+    // callbacks for property inside property container
+    _setup_property_callbacks(property_id) {
+        var self = this;
+        // context menu logic
+        self.properties[property_id].view_element.oncontextmenu = function() {return false;};
+        self.properties[property_id].view_element.onmousedown = function(e) {
+            if (e.button !== 2)
+                return;
+            
+            var delete_func = function() {
+                self.delete_property(property_id);
+            };
+            var insert_before = function() {
+                var property = new Property("New property");
+                self.add_property(property, property_id);
+            };
+            var insert_after = function() {
+                var property = new Property("New property");
+                self.add_property(property, property_id + 1);
+            };
+            open_context_menu(["Delete", "Insert before", "Insert after"], [delete_func, insert_before, insert_after], e);
+        }
     }
 
     _init_column_header_container(container_label, values) {
@@ -164,8 +222,10 @@ class QBETable{
 
     _init_properties_container() {
         this.properties_container = document.getElementsByClassName("properties-container")[0]; // have to be only one
-        for (let property_id = 0; property_id < this.properties.length; ++property_id)
+        for (let property_id = 0; property_id < this.properties.length; ++property_id) {
             this.properties_container.appendChild(this.properties[property_id].view_element);
+            this._setup_property_callbacks(property_id);
+        }
     }
 
     _update_property_views() {

@@ -40,7 +40,7 @@ With this app you can simply and freely work with relation databases.
         - [ ] Notes
 - [ ] Removing:
     - [x] Table
-    - [ ] Column
+    - [x] Column
     - [ ] Row
 - [ ] Save/Load:
     - [x] File with table (CSV file format)
