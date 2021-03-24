@@ -1,3 +1,7 @@
+const TYPES = [ new StringType(), 
+                new BooleanType(), 
+                new NumberType()];
+
 class Property {
     constructor(name, type) {
         this.name = name;
@@ -10,61 +14,146 @@ class Property {
         this._set_element();
     }
 
+    set_description(description) {
+        this.description = description;
+        this._description.textContent = this.description;
+    }
+
     _set_element() {
-        var self = this; // to distinguish JQuery and inner class "this" object
-        self.view_element = document.createElement("div");
-        self.view_element.classList.add("property");
+        this._init_main_container();
+        this._init_header();
+        this._init_details_container();
+    }
 
-        var property_header = document.createElement("div");
-        property_header.classList.add("property-header");
+    _init_main_container() {
+        this.view_element = document.createElement("div");
+        this.view_element.classList.add("property");
+    }
 
-        var property_header_text = document.createElement("div");
-        property_header_text.classList.add("div-text");
-        property_header_text.textContent = self.name;
+    _init_header() {
+        this._header = document.createElement("div");
+        this._header.classList.add("property-header");
 
-        // selection logic
-        $(property_header).click(function (e) {
-            if (e.target !== this && e.target !== property_header_text)
-                return;
-            $(this).toggleClass("selected");
-            self.is_active = !self.is_active;
-        });
-        
-        // editing property name logic
-        $(property_header_text).dblclick(function (e) {
-            if (e.target !== this)
-                return;
-            this.contentEditable = true;
-            $(this).focus();
-        });
-        // to treat enter as finish editing operation
-        $(property_header_text).keydown(function (e) {
-            if (e.which == 13)
-                $(this).blur();
-        });
-        $(property_header_text).blur(function () {
-            this.contentEditable = false;
-            self.name = this.textContent;
-        });
-        
-        property_header.appendChild(property_header_text);
+        this._header_text = document.createElement("div");
+        this._header_text.classList.add("property-header-text");
+        this._header_text.textContent = this.name;
 
-        var description_content = document.createElement("div");
-        description_content.style.display = "none";
-        description_content.classList.add("description-container");
-
+        var self = this;
         var dropdown_btn = create_dropdown_button(
             function () {
-                description_content.textContent = self.description;
-                description_content.style.display = "";
+                self._details_container.style.display = "";
             },
             function () {
-                description_content.style.display = "none";
+                self._details_container.style.display = "none";
             });
-        property_header.appendChild(dropdown_btn);
 
-        self.view_element.appendChild(property_header);
-        self.view_element.appendChild(description_content);
+        this._header.appendChild(this._header_text);
+        this._header.appendChild(dropdown_btn);
+        this.view_element.appendChild(this._header);
+
+        this._init_header_events_processes();
+    }
+
+    _init_header_events_processes() {
+        var self = this;
+        // selection logic
+        this._header.onclick = function (e) {
+            if (e.target !== this && e.target !== self._header_text)
+                return;
+            self._header.classList.toggle("selected");
+            self.is_active = !self.is_active;
+        };
+
+        // header editing logic
+        this._header.ondblclick = function(e) {
+            self._header_text.contentEditable = true;
+            self._header_text.focus();
+        }
+        this._header_text.onkeydown = function (e) {
+            if (e.which == 13)
+                self._header_text.blur();
+        };
+        this._header_text.onblur = function () {
+            self._header_text.contentEditable = false;
+            self.name = self._header_text.textContent;
+        };
+
+    }
+
+    _init_details_container() {
+        this._details_container = document.createElement("div");
+        this._details_container.style.display = "none";
+        this._details_container.classList.add("property-details-container");
+
+        this._init_description_container();
+        this._init_type_container();
+        this._init_notes_container();
+
+        this.view_element.appendChild(this._details_container);
+    }
+
+    _init_description_container() {
+        this._description_container = document.createElement("div");
+        this._description_container.classList.add("property-description-container");
+
+        this._description_label = document.createElement("label");
+        this._description_label.classList.add("property-details-container-label");
+        this._description_label.textContent = "Description:";
+        this._description_container.appendChild(this._description_label);
+
+        this._description = document.createElement("textarea");
+        this._description.classList.add("property-description");
+        var self = this;
+        this._description.onchange = function() {
+            self.description = this.value;
+        };
+        this._description_container.appendChild(this._description);
+
+        this._details_container.appendChild(this._description_container);
+    }
+
+    _init_type_container() {
+        this._type_container = document.createElement("div");
+        this._type_container.classList.add("property-type-container");
+
+        this._type_label = document.createElement("label");
+        this._type_label.classList.add("property-details-container-label");
+        this._type_label.textContent = "Type:";
+        this._type_container.appendChild(this._type_label);
+
+        this._type = document.createElement("select");
+        this._type.classList.add("property-type");
+        for (let type_id = 0; type_id < TYPES.length; ++type_id) {
+            var type_option = document.createElement("option");
+            type_option.value = TYPES[type_id].name;
+            type_option.textContent = TYPES[type_id].name;
+            this._type.appendChild(type_option);
+            if (this.type.name === TYPES[type_id].name)
+                this._type.value = TYPES[type_id].name;
+        }
+        var self = this;
+        this._type.onchange = function() {
+            self.type = TYPES[this.selectedIndex];
+        };
+        this._type_container.appendChild(this._type);
+
+        this._details_container.appendChild(this._type_container);
+    }
+
+    _init_notes_container() {
+        this._notes_container = document.createElement("div");
+        this._notes_container.classList.add("property-notes-container");
+
+        this._notes_label = document.createElement("label");
+        this._notes_label.classList.add("property-details-container-label");
+        this._notes_label.textContent = "Notes:";
+        this._notes_container.appendChild(this._notes_label);
+
+        this._notes = document.createElement("div");
+        this._notes.classList.add("property-notes");
+        this._notes_container.appendChild(this._notes);
+
+        this._details_container.appendChild(this._notes_container);
     }
 }
 

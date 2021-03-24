@@ -230,7 +230,7 @@ class QBETable{
 
     _update_property_views() {
         for (let property_id = 0; property_id < this.properties.length; ++property_id)
-            this.properties[property_id].view_element.style.display = this.is_active ? "block" : "none";
+            this.properties[property_id].view_element.style.display = this.is_active ? "" : "none";
     }
 
     _set_row(row_id) {

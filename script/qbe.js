@@ -5,24 +5,24 @@ function demo_students() {
     var properties = [];
     // properties
     var name = new Property("Name", new StringType());
-    name.description = "Student's name";
+    name.set_description("Student's name");
     properties.push(name);
 
     var surname = new Property("Surname", new StringType());
-    surname.description = "Student's surname";
+    surname.set_description("Student's surname");
     properties.push(surname);
 
     var age = new Property("Age", new NumberType());
-    age.description = "Student's age";
+    age.set_description("Student's age");
     properties.push(age);
 
     var course = new Property("Course", new StringType());
-    course.description = "Student's course";
+    course.set_description("Student's course");
     properties.push(course);
 
     var status_values = ["contract", "free"];
     var status = new Property("Status", new ValuesSetType("Status", status_values));
-    status.description = "Student's status";
+    status.set_description("Student's status");
     properties.push(status);
 
     for (let i = 0; i < 35; ++i) {

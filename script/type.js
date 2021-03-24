@@ -43,7 +43,7 @@ class StringType extends Type {
 
 class BooleanType extends Type{
     constructor(){
-        super("Bolean");
+        super("Boolean");
     }
 
     check(value){

@@ -1,0 +1,82 @@
+.properties {
+    float: left;
+    border: 1px solid black;
+    position: sticky;
+}
+
+.properties-container {
+    height: 96%;
+    overflow-y: scroll;
+    background-color: white;
+}
+
+.properties-header{
+    text-align: center;
+    position: sticky;
+    padding: 1%;
+    font-size: 24px;
+    background-color: #0d2e9b;
+    color: #fdfdfd;
+    height: 3%;
+}
+
+.property{
+    border: solid 2px black;
+    margin: 1%;
+}
+
+.property-header{
+    text-align: center;
+    color: #fff;
+    background-color: #00ad90;
+}
+
+.property-header:hover{
+    background-color: rgb(151, 252, 151);
+    color: black;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: rgb(70, 247, 70);
+    color: black;
+}
+
+.property-header-text {
+    margin: 0;
+    white-space: nowrap;
+    display: inline;
+}
+
+.property-details-container {
+    background-color: rgb(199, 199, 199);
+    font-size: 12px;
+    padding: 1%;
+    border-top: solid 1px black;
+    white-space:pre-wrap;
+}
+
+.property-details-container-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.property-description-container {
+    border: 1px solid black;
+}
+
+.property-description {
+    resize: none;
+    padding: 0;
+    border: none;
+}
+
+.property-type-container {
+    display: flex;
+}
+
+.property-type {
+    width: 100%;
+    text-align-last: center;
+    margin-left: 5%;
+}

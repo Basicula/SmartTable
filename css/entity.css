@@ -1,9 +1,9 @@
-.entity, .property{
+.entity {
     border: solid 2px black;
     margin: 1%;
 }
 
-.entity-header, .property-header{
+.entity-header {
     position: sticky;
     text-align: center;
     z-index: 1;
@@ -12,21 +12,17 @@
     text-overflow: ellipsis;
 }
 
-.entity-header{
+.entity-header {
     background-color: #2196F3;
 }
 
-.property-header{
-    background-color: #00ad90;
-}
-
-.entity-header:hover, .property-header:hover{
+.entity-header:hover {
     background-color: rgb(151, 252, 151);
     color: black;
     cursor: pointer;
 }
 
-.entities, .properties, .tables, .scripts {
+.entities {
     float: left;
     border: 1px solid black;
     position: sticky;
@@ -37,7 +33,7 @@
     color: black;
 }
 
-.entities-header, .properties-header{
+.entities-header {
     text-align: center;
     position: sticky;
     padding: 1%;
@@ -47,7 +43,7 @@
     height: 3%;
 }
 
-.entities-container, .properties-container {
+.entities-container {
     height: 96%;
     overflow-y: scroll;
     background-color: white;
@@ -59,8 +55,4 @@
     padding: 1%;
     border-top: solid 1px black;
     white-space:pre-wrap;
-}
-
-.div-text{
-    display: inline;
 }
