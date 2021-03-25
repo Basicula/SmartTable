@@ -1,6 +1,6 @@
-const TYPES = [ new StringType(), 
-                new BooleanType(), 
-                new NumberType()];
+const TYPES = [new StringType(),
+new BooleanType(),
+new NumberType()];
 
 class Property {
     constructor(name, type) {
@@ -17,6 +17,13 @@ class Property {
     set_description(description) {
         this.description = description;
         this._description.textContent = this.description;
+    }
+
+    toggle(state) {
+        if (state === undefined)
+            state = !this.is_active;
+        this._header.classList.toggle("selected", state);
+        this.is_active = state;
     }
 
     _set_element() {
@@ -60,12 +67,11 @@ class Property {
         this._header.onclick = function (e) {
             if (e.target !== this && e.target !== self._header_text)
                 return;
-            self._header.classList.toggle("selected");
-            self.is_active = !self.is_active;
+            self.toggle();
         };
 
         // header editing logic
-        this._header.ondblclick = function(e) {
+        this._header.ondblclick = function (e) {
             self._header_text.contentEditable = true;
             self._header_text.focus();
         }
@@ -78,6 +84,12 @@ class Property {
             self.name = self._header_text.textContent;
         };
 
+        $(this.view_element).hover(function (e) {
+            if (e.ctrlKey)
+                show_hint(self.description, e);
+        }, function() {
+                hide_hint();
+        });
     }
 
     _init_details_container() {
@@ -87,7 +99,7 @@ class Property {
 
         this._init_description_container();
         this._init_type_container();
-        this._init_notes_container();
+        //this._init_notes_container();
 
         this.view_element.appendChild(this._details_container);
     }
@@ -104,7 +116,7 @@ class Property {
         this._description = document.createElement("textarea");
         this._description.classList.add("property-description");
         var self = this;
-        this._description.onchange = function() {
+        this._description.onchange = function () {
             self.description = this.value;
         };
         this._description_container.appendChild(this._description);
@@ -132,7 +144,7 @@ class Property {
                 this._type.value = TYPES[type_id].name;
         }
         var self = this;
-        this._type.onchange = function() {
+        this._type.onchange = function () {
             self.type = TYPES[this.selectedIndex];
         };
         this._type_container.appendChild(this._type);
@@ -149,7 +161,7 @@ class Property {
         this._notes_label.textContent = "Notes:";
         this._notes_container.appendChild(this._notes_label);
 
-        this._notes = document.createElement("div");
+        this._notes = document.createElement("ul");
         this._notes.classList.add("property-notes");
         this._notes_container.appendChild(this._notes);
 

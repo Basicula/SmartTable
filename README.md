@@ -9,6 +9,7 @@ With this app you can simply and freely work with relation databases.
 - [Searching](Instructions/Searching.md)
 - [Sorting](Instructions/Sorting.md)
 - [Step by step example](Instructions/Step_by_step.md)
+- [Hotkeys](Instructions/Hotkeys.md)
 
 ## Feature list
 - [x] View:
@@ -35,8 +36,8 @@ With this app you can simply and freely work with relation databases.
         - [ ] Notes
     - [ ] Column
         - [x] Name
-        - [ ] Data type
-        - [ ] Description
+        - [x] Data type
+        - [x] Description
         - [ ] Notes
 - [ ] Removing:
     - [x] Table

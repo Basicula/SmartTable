@@ -62,7 +62,6 @@
 }
 
 .property-description-container {
-    border: 1px solid black;
 }
 
 .property-description {
@@ -79,4 +78,12 @@
     width: 100%;
     text-align-last: center;
     margin-left: 5%;
+}
+
+.property-notes-container {
+
+}
+
+.property-notes {
+    
 }
