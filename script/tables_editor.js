@@ -1,4 +1,9 @@
-const SEARCHING_GUIDE_URL = "https://github.com/Basicula/SmartTable/blob/master/Instructions/Searching.md";
+const GUIDE_URL_ROOT = "https://github.com/Basicula/SmartTable/blob/master/Instructions/"
+const SEARCHING_GUIDE_URL = GUIDE_URL_ROOT + "Searching.md";
+const SORTING_GUIDE_URL = GUIDE_URL_ROOT + "Sorting.md";
+const SAVELOAD_GUIDE_URL = GUIDE_URL_ROOT + "Save_Load.md";
+const INTERFACE_GUIDE_URL = GUIDE_URL_ROOT + "Interface.md";
+const HOTKEYS_GUIDE_URL = GUIDE_URL_ROOT + "Hotkeys.md";
 
 class TablesEditor {
     constructor() {
@@ -6,6 +11,7 @@ class TablesEditor {
         this.current_table = undefined;
         this._init_menu();
         this._init_tables();
+        this._init_hotkeys();
     }
 
     _init_menu() {
@@ -31,9 +37,39 @@ class TablesEditor {
         this.menu.add_section(edit);
 
         var help = new MenuSection("Help");
+        var searching = new MenuItem("Interface", function() {open_link_in_new_tab(INTERFACE_GUIDE_URL);});
+        var searching = new MenuItem("Hotkeys", function() {open_link_in_new_tab(HOTKEYS_GUIDE_URL);});
         var searching = new MenuItem("Searching", function() {open_link_in_new_tab(SEARCHING_GUIDE_URL);});
+        var searching = new MenuItem("Sorting", function() {open_link_in_new_tab(SORTING_GUIDE_URL);});
+        var saveload = new MenuItem("Save/Load", function() {open_link_in_new_tab(SAVELOAD_GUIDE_URL);});
         help.add_item(searching);
+        help.add_item(saveload);
         this.menu.add_section(help);
+    }
+
+    _init_hotkeys() {
+        var self = this;
+        window.onkeydown = function(e) {
+            console.log(e.shiftKey, e.altKey, e.which);
+            if (e.shiftKey && e.altKey && e.which == 80) {// shift + alt + P
+                if (self.current_table)
+                    self.current_table.properties.forEach(function(prop) {
+                        prop.toggle(true);
+                    });
+            }
+            else if (e.ctrlKey && e.altKey && e.which == 80) {// ctrl + alt + P
+                if (self.current_table)
+                    self.current_table.properties.forEach(function(prop) {
+                        prop.toggle(false);
+                    });
+            }
+            else if (e.shiftKey && e.which == 84) // shift + T
+                self.new_table();
+            else if (e.shiftKey && e.which == 80) // shift + P
+                self.new_column();
+            else if (e.shiftKey && e.which == 82) // shift + R
+                self.new_row();
+        }
     }
 
     _delete_table_button() {

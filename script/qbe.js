@@ -68,9 +68,3 @@ $(document).ready(function(){
     init_data(demo);
     setInterval(function() {update()}, 500);
 });
-
-$(document).keydown(function(e){
-    if (e.keyCode === 80 && e.ctrlKey && e.altKey) {
-        $(".property-header").click();
-    }
-});
