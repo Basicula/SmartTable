@@ -28,7 +28,7 @@ With this app you can simply and freely work with relation databases. Use [link]
     - [x] Exact search
     - [x] Like search
     - [x] Regular expressions
-- [x] Sorting (ascending and descending)
+- [x] Sorting:
     - [x] Ascending
     - [x] Descending
     - [ ] Sorting priority for columns(now implicit priority from left column to right)
