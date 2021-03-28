@@ -14,6 +14,16 @@ With this app you can simply and freely work with relation databases.
 ## Feature list
 - [x] View:
     - [x] Selection results
+- [x] Hints
+    - [x] Error data hint
+    - [x] Property description on hover
+- [ ] Available data types
+    - [x] String
+    - [x] Boolean
+    - [x] Integer
+    - [ ] Float
+    - [ ] Interval
+    - [ ] Set of values
 - [x] Searching:
     - [x] Exact search
     - [x] Like search
