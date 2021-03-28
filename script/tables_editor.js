@@ -37,13 +37,16 @@ class TablesEditor {
         this.menu.add_section(edit);
 
         var help = new MenuSection("Help");
-        var searching = new MenuItem("Interface", function() {open_link_in_new_tab(INTERFACE_GUIDE_URL);});
-        var searching = new MenuItem("Hotkeys", function() {open_link_in_new_tab(HOTKEYS_GUIDE_URL);});
+        var interface_help = new MenuItem("Interface", function() {open_link_in_new_tab(INTERFACE_GUIDE_URL);});
+        var hotkeys = new MenuItem("Hotkeys", function() {open_link_in_new_tab(HOTKEYS_GUIDE_URL);});
         var searching = new MenuItem("Searching", function() {open_link_in_new_tab(SEARCHING_GUIDE_URL);});
-        var searching = new MenuItem("Sorting", function() {open_link_in_new_tab(SORTING_GUIDE_URL);});
+        var sorting = new MenuItem("Sorting", function() {open_link_in_new_tab(SORTING_GUIDE_URL);});
         var saveload = new MenuItem("Save/Load", function() {open_link_in_new_tab(SAVELOAD_GUIDE_URL);});
         help.add_item(searching);
         help.add_item(saveload);
+        help.add_item(sorting);
+        help.add_item(hotkeys);
+        help.add_item(interface_help);
         this.menu.add_section(help);
     }
 
