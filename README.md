@@ -1,7 +1,7 @@
 # Smart table
 
 ## Quick overview
-With this app you can simply and freely work with relation databases.
+With this app you can simply and freely work with relation databases. Use [link](https://basicula.github.io/SmartTable/html/welcome.html) to use last version of this app.
 
 ## Instructions
 - [Interface](Instructions/Interface.md)
