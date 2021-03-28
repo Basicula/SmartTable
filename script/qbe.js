@@ -12,7 +12,7 @@ function demo_students() {
     surname.set_description("Student's surname");
     properties.push(surname);
 
-    var age = new Property("Age", new NumberType());
+    var age = new Property("Age", new Integer());
     age.set_description("Student's age");
     properties.push(age);
 

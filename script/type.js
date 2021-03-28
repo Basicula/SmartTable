@@ -14,6 +14,14 @@ class Type{
     is_almost_the_same(left, right) {
         return this.is_exact_the_same(left, right);
     }
+
+    cast(value) {
+        return value;
+    }
+
+    error_message() {
+        return "This value can't be interpreted as value of type " + this.name;
+    }
 }
 
 class StringType extends Type {
@@ -39,6 +47,12 @@ class StringType extends Type {
         const similarity = string_similarity(left, right);
         return similarity >= 0.5;
     }
+
+    cast(value) {
+        if (value === undefined)
+            return "";
+        return value.toString();
+    }
 }
 
 class BooleanType extends Type{
@@ -53,13 +67,14 @@ class BooleanType extends Type{
     }
 }
 
-class NumberType extends Type{
+class Integer extends Type{
     constructor(){
-        super("Number");
+        super("Integer");
     }
 
     check(value){
-        if (typeof value !== "number")
+        value = Number(value);
+        if (isNaN(value))
             return false;
         return true;
     }
@@ -74,6 +89,10 @@ class NumberType extends Type{
         left = left.toString();
         right = right.toString();
         return is_prefix(left, right);
+    }
+
+    cast(value) {
+        return Number(value);
     }
 }
 

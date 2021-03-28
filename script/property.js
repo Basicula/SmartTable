@@ -1,6 +1,6 @@
 const TYPES = [new StringType(),
 new BooleanType(),
-new NumberType()];
+new Integer()];
 
 class Property {
     constructor(name, type) {

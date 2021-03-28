@@ -22,6 +22,7 @@ class QBETable{
 
         // used to determine whether we need to update table or not
         this.prev_conditions = [];
+        this.prev_types = [];
 
         // get mapping also for sorting and grouping without changing initial data
         this.sorted_entities_with_indices = 
@@ -208,8 +209,20 @@ class QBETable{
             // fill value for cell
             cell_element.textContent = val;
             // check value correctness
-            if (!this.properties[j].type.check(val))
+            const type = this.properties[j].type;
+            if (!type.check(val)) {
                 cell_element.classList.add("error-content");
+                $(cell_element).hover(
+                    function(e){
+                        show_hint(type.error_message(), e)
+                    },
+                    function(){
+                        hide_hint();
+                    });
+            }
+            else {
+                $(cell_element).hover();
+            }
         }
         else
             cell_element.classList.add("no-data");
@@ -260,6 +273,40 @@ class QBETable{
             
     }
 
+    _is_update_needed(conditions, types) {
+        var is_changed = false;
+        if (this.prev_conditions.length === conditions.length) {
+            for (let condition_id = 0; condition_id < conditions.length; ++condition_id)
+                if (JSON.stringify(this.prev_conditions[condition_id]) !== JSON.stringify(conditions[condition_id])) {
+                    is_changed = true;
+                    break;
+                }
+        }
+        else
+            is_changed = true;
+        if (this.prev_types.length === this.properties.length && !is_changed) {
+            for (let property_id = 0; property_id < this.properties.length; ++property_id) {
+                if (JSON.stringify(this.properties[property_id].type) !== JSON.stringify(this.prev_types[property_id])) {
+                    is_changed = true;
+                    break;
+                }
+            }
+        }
+        else
+            is_changed = true;
+        
+        this.prev_conditions = conditions;
+        this.prev_types = types;
+        return is_changed;
+    }
+
+    get_types() {
+        var types = [];
+        for (let property_id = 0; property_id < this.properties.length; ++property_id)
+            types.push(this.properties[property_id].type);
+        return types;
+    }
+
     get_conditions() {
         var conditions = [];
         // first of all get user input from column headers
@@ -296,21 +343,12 @@ class QBETable{
         }
 
         this.view_element.style.display = "";
-        var conditions = this.get_conditions();
-        
-        // check that nothing changed otherwise update all
-        if (this.prev_conditions.length === conditions.length) {
-            var is_changed = false;
-            for (let condition_id = 0; condition_id < conditions.length; ++condition_id)
-                if (JSON.stringify(this.prev_conditions[condition_id]) !== JSON.stringify(conditions[condition_id])) {
-                    is_changed = true;
-                    break;
-                }
-            if (!is_changed)
-                return;
-        }
-        this.prev_conditions = conditions;
 
+        // check that nothing changed otherwise update all
+        var conditions = this.get_conditions();
+        var types = this.get_types();
+        if (!this._is_update_needed(conditions, types))
+            return;
         // sort based on conditions from user
         this.sort(conditions);
 
@@ -323,7 +361,7 @@ class QBETable{
             const curr_entity_index = row_id === 0 ? -1 : this.sorted_entities_with_indices[row_id - 1].index;
 
             for (let j = 0; j < table_row.children.length; ++j) {
-                if (!this.properties[j].is_active) {                    
+                if (!this.properties[j].is_active) {
                     table_row.children[j].style.display = "none";
                     continue;
                 }
@@ -398,8 +436,9 @@ class QBETable{
             for (let j = 0; j < self.properties.length; ++j) {
                 if (conditions[j] === null || conditions[j].sort_mode === SORT_NONE)
                     continue;
-                const a_val = a.entity.value(j);
-                const b_val = b.entity.value(j);
+                const type = self.properties[j].type;
+                const a_val = type.cast(a.entity.value(j));
+                const b_val = type.cast(b.entity.value(j));
                 const is_ascending = conditions[j].sort_mode === SORT_ASCENDING;
                 if (a_val < b_val)
                     return is_ascending ? -1 : 1;

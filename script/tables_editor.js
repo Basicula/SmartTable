@@ -50,7 +50,6 @@ class TablesEditor {
     _init_hotkeys() {
         var self = this;
         window.onkeydown = function(e) {
-            console.log(e.shiftKey, e.altKey, e.which);
             if (e.shiftKey && e.altKey && e.which == 80) {// shift + alt + P
                 if (self.current_table)
                     self.current_table.properties.forEach(function(prop) {

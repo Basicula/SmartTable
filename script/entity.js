@@ -79,7 +79,10 @@ class Entity{
     set_value(j, value) {
         if (j < 0 || j >= this.values.length)
             return;
-        this.values[j] = value;
+        if (value === "")
+            this.values[j] = undefined;
+        else
+            this.values[j] = value;
     }
 
   }
